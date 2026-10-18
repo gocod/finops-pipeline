@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_customer_unit_margins
+    description: "Monthly customer-level unit economics mart aggregating Stripe revenue against GCP infrastructure costs."
+    columns:
+      - name: usage_month
+        description: "The calendar month for the usage and billing record."
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Unique identifier for the customer."
+        tests:
+          - not_null
+
+      - name: subscription_tier
+        description: "Tier of the customer's subscription (e.g., Growth, Enterprise, Starter)."
+        tests:
+          - not_null
+
+      - name: net_margin_usd
+        description: "Net profit margin calculated as total revenue minus infrastructure cost."
+        tests:
+          - not_null
