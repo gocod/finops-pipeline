@@ -1,9 +1,12 @@
-Cloud FinOps & Unit Economics Intelligence Pipeline
-An end-to-end cloud financial analytics pipeline built on Google Cloud Platform (GCP), BigQuery, dbt, and Looker Studio.
+# Cloud FinOps & Unit Economics Intelligence Pipeline
+
+An end-to-end cloud financial analytics pipeline built on **Google Cloud Platform (GCP)**, **BigQuery**, **dbt**, and **Looker Studio**. 
 
 This project bridges the gap between infrastructure spend and subscription revenue by modeling raw telemetry logs, GCP billing data, and Stripe charges into precise, customer-level unit economic margins.
 
-🏗️ Architecture & Data Flow
+---
+
+## 🏗️ Architecture & Data Flow
 [ Synthetic Telemetry ] ──┐
 [ GCP Billing Data    ] ──┼─► [ Python Data Loader ] ─► [ BigQuery Raw ] ─► [ dbt Data Pipeline ] ─► [ Looker Studio Dashboard ]
 [ Stripe Transactions ] ──┘
