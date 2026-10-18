@@ -1,15 +1,9 @@
-Welcome to your new dbt project!
+# Cloud FinOps & Unit Economics Intelligence Pipeline
 
-### Using the starter project
+An end-to-end cloud financial analytics pipeline built on **Google Cloud Platform (GCP)**, **BigQuery**, **dbt**, and **Looker Studio**. 
 
-Try running the following commands:
-- dbt run
-- dbt test
+This project bridges the gap between infrastructure spend and subscription revenue by modeling raw telemetry logs, GCP billing data, and Stripe charges into precise, customer-level unit economic margins.
 
+---
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## 🏗️ Architecture & Data Flow
