@@ -27,7 +27,15 @@ Margin Drain Identification: Pinpoints high-usage accounts operating at a negati
 
 Pricing & Capacity Planning: Equips Finance & Engineering leadership with data-driven insights to optimize pricing models and tier usage caps.
 
-⚙️ Data Pipeline Models (dbt)Model NameLayerDescriptionstg_api_requestsStagingCleans and casts API request logs and audio usage metricsstg_gcp_billingStagingNormalizes GCP billing export line items and compute costsstg_stripe_chargesStagingExtracts subscription tier metadata and revenue transactionsint_hourly_usage_costsIntermediateMaps customer API volume to hourly cloud infrastructure chargesfct_customer_unit_marginsMartsFinal unit economics model computing revenue, infra costs, and net margin
+## ⚙️ Data Pipeline Models (dbt)
+
+| Model Name | Layer | Description |
+| :--- | :--- | :--- |
+| `stg_api_requests` | Staging | Cleans and casts API request logs and audio usage metrics |
+| `stg_gcp_billing` | Staging | Normalizes GCP billing export line items and compute costs |
+| `stg_stripe_charges` | Staging | Extracts subscription tier metadata and revenue transactions |
+| `int_hourly_usage_costs` | Intermediate | Maps customer API volume to hourly cloud infrastructure charges |
+| `fct_customer_unit_margins` | Marts | Final unit economics model computing revenue, infra costs, and net margin |
 
 🧪 Data Governance & Testing
 Data quality is enforced using dbt schema assertions:
