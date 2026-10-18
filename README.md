@@ -11,24 +11,22 @@ This project bridges the gap between infrastructure spend and subscription reven
 [ GCP Billing Data    ] ──┼─► [ Python Data Loader ] ─► [ BigQuery Raw ] ─► [ dbt Data Pipeline ] ─► [ Looker Studio Dashboard ]
 [ Stripe Transactions ] ──┘
 
-Ingestion Layer (load_synthetic_data.py): Python ingestion pipeline generating 90 days of synthetic customer API usage, raw infrastructure compute costs, and flat-rate Stripe subscription billing into BigQuery raw tables.
+1. **Ingestion Layer (`load_synthetic_data.py`)**: Python ingestion pipeline generating 90 days of synthetic customer API usage, raw infrastructure compute costs, and flat-rate Stripe subscription billing into BigQuery raw tables.
+2. **Transformation Layer (`finops_transform/`)**: 3-layer modular dbt architecture:
+   * **Staging (`stg_`)**: Standardizes schema types, renames raw fields, and casts timestamps to consistent date grains (`usage_month`).
+   * **Intermediate (`int_`)**: Aggregates hourly API audio processing seconds and infrastructure compute costs per customer.
+   * **Marts (`fct_`)**: Joins customer revenue against GCP compute costs to calculate `cost_per_audio_second_usd` and `net_margin_usd`.
+3. **Serving Layer**: Live Looker Studio dashboard providing real-time unit economics visibility across customer subscription tiers (`Starter`, `Growth`, `Enterprise`).
 
-Transformation Layer (finops_transform/): 3-layer modular dbt architecture:
+---
 
-Staging (stg_): Standardizes schema types, renames raw fields, and casts timestamps to consistent date grains (usage_month).
+## 💡 FinOps & Business Impact
 
-Intermediate (int_): Aggregates hourly API audio processing seconds and infrastructure compute costs per customer.
+* **Unit Margin Visibility**: Calculates exact cost-per-unit metrics (`$ / audio second`) by linking application usage directly to cloud infrastructure billings.
+* **Margin Drain Identification**: Pinpoints high-usage accounts operating at a negative net margin due to flat-rate subscription tier ceilings.
+* **Pricing & Capacity Planning**: Equips Finance & Engineering leadership with data-driven insights to optimize pricing models and tier usage caps.
 
-Marts (fct_): Joins customer revenue against GCP compute costs to calculate cost_per_audio_second_usd and net_margin_usd.
-
-Serving Layer: Live Looker Studio dashboard providing real-time unit economics visibility across customer subscription tiers (Starter, Growth, Enterprise).
-
-💡 FinOps & Business Impact
-Unit Margin Visibility: Calculates exact cost-per-unit metrics ($ / audio second) by linking application usage directly to cloud infrastructure billings.
-
-Margin Drain Identification: Pinpoints high-usage accounts operating at a negative net margin due to flat-rate subscription tier ceilings.
-
-Pricing & Capacity Planning: Equips Finance & Engineering leadership with data-driven insights to optimize pricing models and tier usage caps.
+---
 
 ## ⚙️ Data Pipeline Models (dbt)
 
@@ -40,14 +38,16 @@ Pricing & Capacity Planning: Equips Finance & Engineering leadership with data-d
 | `int_hourly_usage_costs` | Intermediate | Maps customer API volume to hourly cloud infrastructure charges |
 | `fct_customer_unit_margins` | Marts | Final unit economics model computing revenue, infra costs, and net margin |
 
-🧪 Data Governance & Testing
+---
+
+## 🧪 Data Governance & Testing
+
 Data quality is enforced using dbt schema assertions:
-
-Uniqueness & Non-Null: Verified across surrogate keys and customer IDs (not_null, unique).
-
-Relational Integrity: Foreign key relationships validated between staging usage records and billing entities.
+* **Uniqueness & Non-Null**: Verified across surrogate keys and customer IDs (`not_null`, `unique`).
+* **Relational Integrity**: Foreign key relationships validated between staging usage records and billing entities.
 
 To execute tests locally:
+```powershell
 dbt test
 
 🛠️ Project Setup & Local Execution
